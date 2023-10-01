@@ -32,15 +32,18 @@ int main() {
                 perror("Input reading error");
                 return 3;
             }
-            if (c == '\n') {
+            if (c == '\n' and counter !=0) {
                 input = "";
                 counter += 1;
-            } else if (c == ' ') {
+            } else if (c == ' ' or c == '\n') {
                 if (write(pipe_fd[1], &input, sizeof(input)) == -1) { // writing to forward pipe
                     perror("Writing to forward pipe error");
                     return 4;
                 }
                 input="";
+                if (counter == 0) {
+                    counter += 1;
+                }
             } else {
                 input += c;
             }
