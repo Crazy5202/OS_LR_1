@@ -16,14 +16,15 @@ int main() {
         _exit(-1);
     }
     char* var = strtok(data, "\n"); // getting filename
-    int file = open(var, O_WRONLY | O_CREAT, 0777);
-    if (file == -1) {
-        perror("File reading error");
-        _exit(-2);
-    }
     var = strtok(NULL, "\n"); // getting array with all the numbers
     var = strtok(var, " "); // getting first number as char*
-    if (var == NULL) { // checking whether data is correct
+    if ((var == NULL) || (atoi(var)==0)) { // checking whether data is correct
+        perror("data format error");
+        _exit(-2);
+    }
+    int file = open(data, O_WRONLY | O_CREAT, 0777);
+    if (file == -1) {
+        perror("File reading error");
         _exit(-3);
     }
     int result=atoi(var); // getting first number as int
@@ -32,6 +33,7 @@ int main() {
         printf("%d ", result);
         int del = atoi(var);
         if (del == 0) { // checking for 0 div
+            perror("Zero divider error");
             _exit(-4);
         }
         result/=del;
