@@ -38,7 +38,7 @@ int main() {
         var = strtok(NULL, " ");
     }
 
-    int num_len=0, num = result; // creating string version of result
+    int num_len=1, num = result/10; // creating string version of result
     while (num>0) {
         num/=10;
         num_len++;

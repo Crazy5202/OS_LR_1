@@ -63,7 +63,7 @@ int main() {
             perror("Backward pipe reading error");
             return 4;
         }
-        if ((write(STDOUT_FILENO, &answer, answ_len*sizeof(char)) == -1) || (write(STDOUT_FILENO, "\n", sizeof(char)) == -1)) { // writing answer to output
+        if ((write(STDOUT_FILENO, "Here is the answer: ", 20*sizeof(char)) == -1) || (write(STDOUT_FILENO, &answer, answ_len*sizeof(char)) == -1) || (write(STDOUT_FILENO, "\n", sizeof(char)) == -1)) { // writing answer to output
             perror("Writing to stdout error");
             return 5;
         }
