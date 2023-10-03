@@ -5,7 +5,7 @@
 
 int main() {
     int pipe_fd[2]; // creating pipe to child process; pipe_fd[0] - for reading, pipe_fd[1] - for writing
-    int pipe_bw[2]; // creating pipepipe from executed program to parent process
+    int pipe_bw[2]; // creating pipe from executed program to parent process
     if ((pipe(pipe_fd) == -1) || (pipe(pipe_bw)==-1)) { // creating pipes
         perror("Pipe creation error");
         return 1;
@@ -41,6 +41,8 @@ int main() {
             }
         }
         input[len-1]=' '; // doing this for strtok later
+        input = realloc(input, sizeof(char)*(++len));
+        input[len-1]='\0';
         if ((write(pipe_fd[1], &len, sizeof(int)) == -1) || (write(pipe_fd[1], input, sizeof(char)*len) == -1)) { // writing to forward pipe
             perror("Writing to forward pipe error");
             return 5;
@@ -50,7 +52,7 @@ int main() {
         int status;
         wait(&status); // waiting for child process to finish
         if (WIFEXITED(status) && WEXITSTATUS(status)!=0) { // checking for error in child
-            return(6);
+            return 6;
         }
         int answ_len;
         
